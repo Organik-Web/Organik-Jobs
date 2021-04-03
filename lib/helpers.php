@@ -9,12 +9,16 @@
  * Accepts a string for changing the button text
  */
 function orgnk_jobs_entry_apply_button( $button_text = 'Apply now' ) {
-	
-	$output     = NULL;
-	$link       = esc_url( get_post_meta( get_the_ID(), 'job_application_link', true ) );
 
-	if ( $link ) { 
-        $output .= '<a class="primary-button" href="' . $link . '" target="_blank" rel="noopener">' . $button_text . '</a>';
+	$output     			= NULL;
+	$application_type		= esc_html( get_post_meta( get_the_ID(), 'job_application_type', true ) );
+	$application_link		= esc_url( get_post_meta( get_the_ID(), 'job_application_link', true ) );
+	$application_email		= sanitize_email( get_post_meta( get_the_ID(), 'job_application_email', true ) );
+
+	if ( $application_type === 'url' && $application_link ) {
+        $output .= '<a class="primary-button" href="' . $application_link . '" target="_blank" rel="noopener">' . $button_text . '</a>';
+	} elseif ( $application_type === 'email' && $application_email ) {
+        $output .= '<a class="primary-button" href="mailto:' . $application_email . '" target="_blank" rel="noopener">' . $button_text . '</a>';
 	}
 
 	return $output;
