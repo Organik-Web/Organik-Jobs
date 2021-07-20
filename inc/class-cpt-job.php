@@ -26,7 +26,7 @@ class Organik_Jobs {
         }
         return self::$instance;
 	}
-	
+
 	/**
      * Constructor function
      */
@@ -43,8 +43,11 @@ class Organik_Jobs {
 
 		// Modify the archive query
 		add_filter( 'pre_get_posts', array( $this, 'orgnk_jobs_cpt_archive_query' ) );
+
+		// Register ACF Fields
+		new Organik_Jobs_ACF_Fields();
 	}
-	
+
 	/**
 	 * orgnk_jobs_cpt_register()
 	 * Register the custom post type
@@ -80,14 +83,14 @@ class Organik_Jobs {
 			'items_list_navigation' 		=> 'Jobs list navigation',
 			'filter_items_list'     		=> 'Filter jobs list'
 		);
-	
+
 		$rewrite = array(
 			'slug'                  		=> ORGNK_JOBS_REWRITE_SLUG, // The slug for single posts
 			'with_front'            		=> false,
 			'pages'                 		=> true,
 			'feeds'                 		=> false
 		);
-	
+
 		$args = array(
 			'label'                 		=> ORGNK_JOBS_SINGLE_NAME,
 			'description'           		=> 'Manage and display jobs',
@@ -128,7 +131,7 @@ class Organik_Jobs {
 		define( 'ORGNK_JOBS_REWRITE_SLUG', $archive_permalink );
 	}
 
-	/** 
+	/**
 	 * orgnk_jobs_cpt_title_placeholder()
 	 * Change CPT title placeholder on edit screen
 	 */
